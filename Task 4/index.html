@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ApexMetrics Enterprise — Reactive Business Intelligence & Administration Portal</title>
+  <meta name="description" content="Next-generation enterprise analytical administration portal with reactive chart objects, multi-view routing, matrix data filters, live telemetry streams, and dynamic multi-theme engine." />
+  <meta name="theme-color" content="#090d16" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/themes.css" />
+
+  <!-- External Visual Libraries (Chart.js + Canvas Confetti) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Enterprise Navigation Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="#dashboard" class="brand-logo">
+          <div class="brand-icon">▲</div>
+          <span class="brand-name">Apex<span style="color: var(--primary-400);">Metrics</span></span>
+          <span class="brand-badge">Enterprise</span>
+        </a>
+        <button class="sidebar-collapse-btn" id="sidebarCollapseBtn" title="Toggle Sidebar Width">
+          «
+        </button>
+      </div>
+
+      <nav class="sidebar-nav-container">
+        <div class="nav-section-title">Core Intelligence</div>
+        <a href="#dashboard" class="sidebar-nav-link active">
+          <span style="font-size: 1.15rem;">📊</span>
+          <span class="nav-link-text">Executive Dashboard</span>
+        </a>
+        <a href="#analytics" class="sidebar-nav-link">
+          <span style="font-size: 1.15rem;">📈</span>
+          <span class="nav-link-text">Deep Analytics</span>
+          <span class="nav-item-badge">Pro</span>
+        </a>
+        <a href="#finance" class="sidebar-nav-link">
+          <span style="font-size: 1.15rem;">💰</span>
+          <span class="nav-link-text">Treasury & Finance</span>
+        </a>
+
+        <div class="nav-section-title">Operations & Tenants</div>
+        <a href="#customers" class="sidebar-nav-link">
+          <span style="font-size: 1.15rem;">👥</span>
+          <span class="nav-link-text">Enterprise Tenants</span>
+        </a>
+        <a href="#inventory" class="sidebar-nav-link">
+          <span style="font-size: 1.15rem;">🖥️</span>
+          <span class="nav-link-text">Cluster Health</span>
+        </a>
+        <a href="#reports" class="sidebar-nav-link">
+          <span style="font-size: 1.15rem;">📁</span>
+          <span class="nav-link-text">Compliance Reports</span>
+        </a>
+
+        <div class="nav-section-title">System</div>
+        <a href="#settings" class="sidebar-nav-link">
+          <span style="font-size: 1.15rem;">⚙️</span>
+          <span class="nav-link-text">Portal Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-avatar">
+          AM
+          <div class="user-status-indicator"></div>
+        </div>
+        <div class="user-info">
+          <div class="user-name">Amine Belkhir</div>
+          <div class="user-role">Lead Enterprise Architect</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-wrapper">
+      <!-- Top Application Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Open Navigation Menu">
+            ☰
+          </button>
+          <!-- Command Palette Launcher -->
+          <button class="command-search-btn" id="commandPaletteBtn" aria-label="Search Command Palette">
+            <span>🔍</span>
+            <span>Search telemetry or views...</span>
+            <kbd class="search-kbd-shortcut">Ctrl K</kbd>
+          </button>
+        </div>
+
+        <div class="header-right">
+          <!-- Real-time Live Stream Telemetry Controller -->
+          <div class="live-stream-controller" title="Real-time WebSocket Data Ingestion">
+            <span class="live-pulse-dot" id="livePulseIndicator"></span>
+            <span id="liveStreamStatusLabel">LIVE 2.4k req/s</span>
+            <button class="stream-toggle-btn" id="liveStreamToggleBtn" title="Pause / Resume Live Telemetry">⏸</button>
+          </div>
+
+          <!-- Multi-Theme Selector Dropdown -->
+          <div class="theme-selector-dropdown">
+            <button class="header-icon-btn" id="themeDropdownBtn" title="Change Theme Palette">
+              🎨
+            </button>
+            <div class="theme-menu" id="themeDropdownMenu">
+              <button class="theme-option-btn selected" data-theme-choice="dark">
+                <span class="theme-dot" style="background: #6366f1;"></span> Midnight Dark
+              </button>
+              <button class="theme-option-btn" data-theme-choice="light">
+                <span class="theme-dot" style="background: #0284c7;"></span> Clean Light
+              </button>
+              <button class="theme-option-btn" data-theme-choice="cyber">
+                <span class="theme-dot" style="background: #00f0ff;"></span> Cyber Neon
+              </button>
+              <button class="theme-option-btn" data-theme-choice="slate">
+                <span class="theme-dot" style="background: #38bdf8;"></span> Royal Slate
+              </button>
+            </div>
+          </div>
+
+          <!-- Notifications Bell -->
+          <button class="header-icon-btn" onclick="window.app.showToast('Security Alert', 'Zero anomalies in cluster eu-west-1', 'info')" title="Notifications">
+            🔔
+            <span class="icon-badge"></span>
+          </button>
+
+          <!-- Quick Action CTA -->
+          <button class="btn btn-primary btn-sm" onclick="window.app.showToast('Sync Triggered', 'All node clusters re-synchronized', 'success')">
+            ⚡ Quick Sync
+          </button>
+        </div>
+      </header>
+
+      <!-- View Content Root -->
+      <main class="content-body">
+        <!-- Breadcrumb Tracker -->
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: var(--space-md); display: flex; align-items: center; gap: 6px;">
+          <span>Portal</span>
+          <span>›</span>
+          <span id="breadcrumbCurrent" style="color: var(--text-primary); font-weight: 600;">Executive Dashboard</span>
+        </div>
+
+        <div id="viewContainer">
+          <!-- Dynamically populated by router.js -->
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Command Palette Modal (Ctrl + K) -->
+  <div class="modal-backdrop" id="commandPaletteModal">
+    <div class="modal-window command-palette-window">
+      <div class="command-input-wrapper">
+        <span style="font-size: 1.2rem;">🔍</span>
+        <input type="text" id="commandPaletteInput" class="command-input" placeholder="Type a view, command or theme..." autocomplete="off" />
+        <kbd class="search-kbd-shortcut">ESC to close</kbd>
+      </div>
+      <div class="command-results-list" id="commandPaletteResults">
+        <!-- Populated dynamically by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Customer Dossier Drilldown Modal -->
+  <div class="modal-backdrop" id="drilldownModal">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 style="font-size: 1.15rem;">Enterprise Tenant Dossier & Telemetry</h3>
+        <button class="modal-close-btn btn btn-icon btn-outline" style="font-size: 1.1rem;">✕</button>
+      </div>
+      <div class="modal-body" id="drilldownModalContent">
+        <!-- Populated dynamically when row is inspected -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm modal-close-btn">Close Inspection</button>
+        <button class="btn btn-primary btn-sm" onclick="alert('Exporting signed enterprise compliance audit log.');">Generate Audit Certificate</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Stack -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Application Modular Scripts -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

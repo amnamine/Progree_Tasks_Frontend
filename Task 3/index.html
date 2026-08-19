@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Aetheria Weather - World-Class Real-Time Global Weather Dashboard with live forecasts, interactive radar map, telemetry metrics, and dynamic atmospheric simulation.">
+  <title>AETHERIA // Ultra-Modern Global Weather Portal</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Leaflet Map CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/weather-effects.css">
+</head>
+<body class="theme-atmosphere" data-weather="clear">
+  <!-- Dynamic Atmosphere Canvas Background -->
+  <canvas id="weather-canvas" class="weather-canvas"></canvas>
+  <div class="ambient-glow" id="ambient-glow"></div>
+  <div class="atmosphere-overlay"></div>
+
+  <!-- Main App Shell -->
+  <div class="app-layout">
+    
+    <!-- Top Navigation & Header -->
+    <header class="app-header">
+      <div class="brand-container">
+        <div class="brand-logo-badge">
+          <i data-lucide="cloud-sun" class="brand-icon"></i>
+        </div>
+        <div class="brand-text">
+          <h1 class="brand-title">AETHERIA <span class="badge-pro">LIVE</span></h1>
+          <p class="brand-subtitle">Hyper-Accurate Global Meteorological Portal</p>
+        </div>
+      </div>
+
+      <!-- Search Box & Geocoding Autocomplete -->
+      <div class="search-section">
+        <div class="search-bar-wrapper">
+          <i data-lucide="search" class="search-icon"></i>
+          <input 
+            type="text" 
+            id="city-search-input" 
+            class="city-search-input" 
+            placeholder="Search any city or coordinates worldwide (e.g. Tokyo, Paris, New York)..." 
+            autocomplete="off"
+            spellcheck="false"
+          >
+          <button id="clear-search-btn" class="search-action-btn hidden" title="Clear">
+            <i data-lucide="x"></i>
+          </button>
+          <div id="search-spinner" class="search-spinner hidden"></div>
+        </div>
+
+        <!-- Autocomplete Suggestions Dropdown -->
+        <div id="search-dropdown" class="search-dropdown hidden"></div>
+      </div>
+
+      <!-- Controls & Quick Actions -->
+      <div class="header-controls">
+        <!-- Geolocation Button -->
+        <button id="geo-btn" class="ctrl-btn" title="Use My Current GPS Location">
+          <i data-lucide="crosshair"></i>
+          <span>My Location</span>
+        </button>
+
+        <!-- Temperature Unit Toggle (°C / °F) -->
+        <div class="unit-toggle" id="unit-toggle" role="group" aria-label="Temperature Units">
+          <button class="unit-btn active" data-unit="celsius">°C</button>
+          <button class="unit-btn" data-unit="fahrenheit">°F</button>
+        </div>
+
+        <!-- API Source Config Modal Trigger -->
+        <button id="api-modal-btn" class="ctrl-btn icon-only" title="API Settings (OpenWeatherMap / Open-Meteo)">
+          <i data-lucide="settings-2"></i>
+        </button>
+
+        <!-- Refresh Button -->
+        <button id="refresh-btn" class="ctrl-btn icon-only" title="Force Refresh Weather Data">
+          <i data-lucide="refresh-cw" id="refresh-icon"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Predefined Worldwide Destinations Strip -->
+    <section class="predefined-cities-section">
+      <div class="section-headline">
+        <div class="headline-left">
+          <span class="live-dot"></span>
+          <span class="headline-label">GLOBAL WEATHER HUBS</span>
+          <span class="headline-tip">(Click any city for instant forecast)</span>
+        </div>
+        <div class="carousel-nav">
+          <button id="cities-prev" class="carousel-arrow" aria-label="Scroll left"><i data-lucide="chevron-left"></i></button>
+          <button id="cities-next" class="carousel-arrow" aria-label="Scroll right"><i data-lucide="chevron-right"></i></button>
+        </div>
+      </div>
+
+      <div class="cities-carousel-track" id="predefined-cities-container">
+        <!-- Dynamic predefined city cards injected by JS -->
+      </div>
+    </section>
+
+    <!-- Error State Container -->
+    <div id="error-banner" class="error-banner hidden">
+      <div class="error-content">
+        <i data-lucide="alert-triangle" class="error-icon"></i>
+        <div class="error-text">
+          <h4 id="error-title">Unable to Retrieve Meteorological Data</h4>
+          <p id="error-message">Failed to connect to the weather network. Please verify your connection or try again.</p>
+        </div>
+      </div>
+      <button id="error-retry-btn" class="error-retry-btn">
+        <i data-lucide="rotate-ccw"></i>
+        <span>Retry</span>
+      </button>
+    </div>
+
+    <!-- Main Dashboard Grid -->
+    <main class="dashboard-grid" id="main-dashboard">
+      
+      <!-- LEFT COLUMN: Hero Condition & Air Quality & Sun Arc & Clothing Advisory -->
+      <div class="dash-column dash-col-primary">
+        
+        <!-- Hero Weather Banner Card -->
+        <div class="glass-card hero-card" id="hero-card">
+          <div class="hero-header">
+            <div class="location-badge">
+              <div class="location-name-row">
+                <i data-lucide="map-pin" class="pin-icon"></i>
+                <h2 id="location-name" class="location-name">Tokyo</h2>
+                <span id="country-code" class="country-badge">JP</span>
+                <button id="favorite-btn" class="fav-toggle-btn" title="Add to favorites">
+                  <i data-lucide="star" class="fav-icon"></i>
+                </button>
+              </div>
+              <div class="location-meta">
+                <span id="local-time" class="local-time">--:-- --</span>
+                <span class="meta-separator">•</span>
+                <span id="geo-coords" class="geo-coords">35.68°N, 139.69°E</span>
+                <span class="meta-separator">•</span>
+                <span id="elevation-stat" class="elevation-stat">44m Elev</span>
+              </div>
+            </div>
+
+            <div class="update-pill">
+              <i data-lucide="clock" class="update-icon"></i>
+              <span id="last-updated-text">Updated Just Now</span>
+            </div>
+          </div>
+
+          <div class="hero-body">
+            <div class="hero-temp-block">
+              <div class="temp-display-wrapper">
+                <span id="current-temp" class="current-temp">24</span>
+                <span class="temp-unit-symbol" id="hero-unit-symbol">°C</span>
+              </div>
+              <div class="hero-condition-wrap">
+                <div id="weather-icon-3d" class="weather-icon-3d">
+                  <!-- Animated SVG Icon -->
+                </div>
+                <div class="condition-labels">
+                  <h3 id="weather-description" class="weather-description">Partly Cloudy</h3>
+                  <p class="feels-like-text">Feels like <strong id="feels-like-temp">26°C</strong></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-minmax-strip">
+              <div class="minmax-item">
+                <i data-lucide="arrow-up" class="high-arrow"></i>
+                <span>High: <strong id="high-temp">27°C</strong></span>
+              </div>
+              <div class="minmax-divider"></div>
+              <div class="minmax-item">
+                <i data-lucide="arrow-down" class="low-arrow"></i>
+                <span>Low: <strong id="low-temp">19°C</strong></span>
+              </div>
+              <div class="minmax-divider"></div>
+              <div class="minmax-item">
+                <i data-lucide="droplets" class="rain-arrow"></i>
+                <span>Precipitation: <strong id="hero-precip-chance">12%</strong></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hourly Forecast Visualizer & Trend Chart -->
+        <div class="glass-card hourly-card">
+          <div class="card-header">
+            <div class="header-title-wrap">
+              <i data-lucide="clock-4" class="card-icon"></i>
+              <h3>24-Hour Forecast & Trajectory</h3>
+            </div>
+            <div class="chart-tab-controls">
+              <button class="chart-tab-btn active" data-chart="temp">Temperature</button>
+              <button class="chart-tab-btn" data-chart="rain">Precipitation</button>
+              <button class="chart-tab-btn" data-chart="wind">Wind</button>
+            </div>
+          </div>
+
+          <!-- Interactive Canvas Chart -->
+          <div class="chart-viewport">
+            <canvas id="hourly-chart" class="hourly-chart-canvas" height="150"></canvas>
+          </div>
+
+          <!-- Horizontal Hourly Cards Slider -->
+          <div class="hourly-timeline-slider" id="hourly-timeline-container">
+            <!-- Hourly pills injected by JS -->
+          </div>
+        </div>
+
+        <!-- 7-Day Extended Forecast Card -->
+        <div class="glass-card forecast-7day-card">
+          <div class="card-header">
+            <div class="header-title-wrap">
+              <i data-lucide="calendar-days" class="card-icon"></i>
+              <h3>7-Day Synoptic Outlook</h3>
+            </div>
+            <span class="forecast-hint">Click day for granular details</span>
+          </div>
+
+          <div class="forecast-list" id="daily-forecast-list">
+            <!-- Daily forecast items injected by JS -->
+          </div>
+        </div>
+
+        <!-- Smart Lifestyle & Activity Intelligence -->
+        <div class="glass-card lifestyle-card">
+          <div class="card-header">
+            <div class="header-title-wrap">
+              <i data-lucide="sparkles" class="card-icon"></i>
+              <h3>Lifestyle & Activity Intelligence</h3>
+            </div>
+          </div>
+
+          <div class="lifestyle-grid">
+            <div class="activity-chip" id="chip-clothing">
+              <div class="chip-icon-box"><i data-lucide="shirt"></i></div>
+              <div class="chip-info">
+                <span class="chip-title">Clothing Advisory</span>
+                <span class="chip-val" id="adv-clothing">Light jacket & breathable fabric</span>
+              </div>
+            </div>
+
+            <div class="activity-chip" id="chip-umbrella">
+              <div class="chip-icon-box"><i data-lucide="umbrella"></i></div>
+              <div class="chip-info">
+                <span class="chip-title">Umbrella Need</span>
+                <span class="chip-val" id="adv-umbrella">Not required today</span>
+              </div>
+            </div>
+
+            <div class="activity-chip" id="chip-running">
+              <div class="chip-icon-box"><i data-lucide="footprints"></i></div>
+              <div class="chip-info">
+                <span class="chip-title">Outdoor Running</span>
+                <span class="chip-val" id="adv-running">Optimal Conditions</span>
+              </div>
+            </div>
+
+            <div class="activity-chip" id="chip-driving">
+              <div class="chip-icon-box"><i data-lucide="car"></i></div>
+              <div class="chip-info">
+                <span class="chip-title">Driving Visibility</span>
+                <span class="chip-val" id="adv-driving">Clear roads & great visibility</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN: Deep Telemetry Metric Widgets & Interactive Map -->
+      <div class="dash-column dash-col-secondary">
+        
+        <!-- Live Radar & Weather Map Card -->
+        <div class="glass-card map-card">
+          <div class="card-header">
+            <div class="header-title-wrap">
+              <i data-lucide="map" class="card-icon"></i>
+              <h3>Interactive Synoptic Map</h3>
+            </div>
+            <div class="map-layer-pills" id="map-layer-selector">
+              <button class="layer-pill active" data-layer="standard">Standard</button>
+              <button class="layer-pill" data-layer="satellite">Satellite</button>
+              <button class="layer-pill" data-layer="dark">Night Dark</button>
+            </div>
+          </div>
+          <div class="map-frame-wrap">
+            <div id="weather-map" class="leaflet-weather-map"></div>
+            <div class="map-overlay-badge" id="map-coords-badge">
+              <i data-lucide="crosshair"></i>
+              <span id="map-coords-text">35.68°N, 139.69°E</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8-Metric Deep Telemetry Grid -->
+        <div class="telemetry-grid">
+          
+          <!-- 1. Wind & Gust Compass Widget -->
+          <div class="glass-card telemetry-card wind-card">
+            <div class="card-top">
+              <span class="telemetry-label">WIND DYNAMICS</span>
+              <i data-lucide="wind" class="telemetry-header-icon"></i>
+            </div>
+            <div class="telemetry-body">
+              <div class="wind-visualizer">
+                <div class="compass-ring">
+                  <span class="compass-pt compass-n">N</span>
+                  <span class="compass-pt compass-e">E</span>
+                  <span class="compass-pt compass-s">S</span>
+                  <span class="compass-pt compass-w">W</span>
+                  <div class="compass-dial" id="compass-dial">
+                    <div class="compass-arrow"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="wind-data">
+                <div class="telemetry-main-val">
+                  <span id="wind-speed">14</span>
+                  <span class="telemetry-unit" id="wind-unit-label">km/h</span>
+                </div>
+                <div class="telemetry-sub-detail">
+                  <span>Direction: <strong id="wind-direction-text">ENE (65°)</strong></span>
+                  <span>Gusts: <strong id="wind-gusts">22 km/h</strong></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. UV Index & Radiation Widget -->
+          <div class="glass-card telemetry-card uv-card">
+            <div class="card-top">
+              <span class="telemetry-label">UV INDEX</span>
+              <i data-lucide="sun" class="telemetry-header-icon"></i>
+            </div>
+            <div class="telemetry-body">
+              <div class="uv-gauge-wrap">
+                <div class="uv-bar-track">
+                  <div class="uv-bar-fill" id="uv-bar-fill" style="width: 45%;"></div>
+                </div>
+              </div>
+              <div class="telemetry-main-val">
+                <span id="uv-index-val">5.2</span>
+                <span class="badge-status-pill badge-moderate" id="uv-status-badge">Moderate</span>
+              </div>
+              <div class="telemetry-sub-detail">
+                <span id="uv-advice-text">Wear sunglasses on bright days</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Air Quality Index (AQI) Widget -->
+          <div class="glass-card telemetry-card aqi-card">
+            <div class="card-top">
+              <span class="telemetry-label">AIR QUALITY (AQI)</span>
+              <i data-lucide="leaf" class="telemetry-header-icon"></i>
+            </div>
+            <div class="telemetry-body">
+              <div class="telemetry-main-val">
+                <span id="aqi-score">28</span>
+                <span class="badge-status-pill badge-good" id="aqi-status-badge">Good</span>
+              </div>
+              <div class="aqi-pollutants-mini">
+                <div class="pollutant-item">
+                  <span class="pollutant-label">PM2.5</span>
+                  <strong id="aqi-pm25">6.4 µg</strong>
+                </div>
+                <div class="pollutant-item">
+                  <span class="pollutant-label">PM10</span>
+                  <strong id="aqi-pm10">12.1 µg</strong>
+                </div>
+                <div class="pollutant-item">
+                  <span class="pollutant-label">O₃</span>
+                  <strong id="aqi-o3">48.2 µg</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Humidity & Dew Point Widget -->
+          <div class="glass-card telemetry-card humidity-card">
+            <div class="card-top">
+              <span class="telemetry-label">HUMIDITY</span>
+              <i data-lucide="droplet" class="telemetry-header-icon"></i>
+            </div>
+            <div class="telemetry-body">
+              <div class="telemetry-main-val">
+                <span id="humidity-val">68</span>
+                <span class="telemetry-unit">%</span>
+              </div>
+              <div class="meter-bar-track">
+                <div class="meter-bar-fill meter-humidity" id="humidity-bar-fill" style="width: 68%;"></div>
+              </div>
+              <div class="telemetry-sub-detail">
+                <span>Dew Point: <strong id="dew-point-val">16°C</strong></span>
+                <span id="humidity-comfort">Comfortable</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Solar Day Arc (Sunrise & Sunset) -->
+          <div class="glass-card telemetry-card sun-arc-card">
+            <div class="card-top">
+              <span class="telemetry-label">SOLAR CYCLE</span>
+              <i data-lucide="sunrise" class="telemetry-header-icon"></i>
+            </div>
+            <div class="sun-arc-visualizer">
+              <svg viewBox="0 0 200 100" class="sun-arc-svg">
+                <path d="M 20 90 A 80 80 0 0 1 180 90" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3" stroke-dasharray="4 4"/>
+                <path d="M 20 90 A 80 80 0 0 1 180 90" id="sun-progress-path" fill="none" stroke="url(#sun-gradient)" stroke-width="4"/>
+                <defs>
+                  <linearGradient id="sun-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#ff7e5f"/>
+                    <stop offset="100%" stop-color="#feb47b"/>
+                  </linearGradient>
+                </defs>
+                <circle id="sun-position-dot" cx="100" cy="20" r="7" fill="#ffb703" filter="drop-shadow(0 0 8px #ffb703)"/>
+              </svg>
+              <div class="sun-times-row">
+                <div class="sun-time-node">
+                  <i data-lucide="sunrise" class="mini-sun-icon"></i>
+                  <span class="sun-time-label">Sunrise</span>
+                  <strong id="sunrise-time">05:18 AM</strong>
+                </div>
+                <div class="sun-time-node align-right">
+                  <i data-lucide="sunset" class="mini-sun-icon"></i>
+                  <span class="sun-time-label">Sunset</span>
+                  <strong id="sunset-time">06:42 PM</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Moon Phase & Illumination -->
+          <div class="glass-card telemetry-card moon-card">
+            <div class="card-top">
+              <span class="telemetry-label">LUNAR PHASE</span>
+              <i data-lucide="moon" class="telemetry-header-icon"></i>
+            </div>
+            <div class="telemetry-body moon-layout">
+              <div class="moon-visual" id="moon-visual-disc">
+                <div class="moon-glow"></div>
+                <div class="moon-body" id="moon-shadow-mask"></div>
+              </div>
+              <div class="moon-text-info">
+                <strong id="moon-phase-name" class="moon-phase-title">Waxing Gibbous</strong>
+                <span class="moon-illumination">Illumination: <strong id="moon-illum-pct">78%</strong></span>
+                <span class="moon-next">Next Full Moon: <strong id="next-full-moon">in 4 days</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7. Atmospheric Pressure & Barometer -->
+          <div class="glass-card telemetry-card pressure-card">
+            <div class="card-top">
+              <span class="telemetry-label">BAROMETER</span>
+              <i data-lucide="gauge" class="telemetry-header-icon"></i>
+            </div>
+            <div class="telemetry-body">
+              <div class="telemetry-main-val">
+                <span id="pressure-val">1013</span>
+                <span class="telemetry-unit">hPa</span>
+              </div>
+              <div class="telemetry-sub-detail">
+                <span>Sea Level: <strong id="pressure-sea-level">1013.2 hPa</strong></span>
+                <span id="pressure-trend-badge" class="badge-status-pill badge-neutral">Stable</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 8. Visibility & Cloud Density -->
+          <div class="glass-card telemetry-card visibility-card">
+            <div class="card-top">
+              <span class="telemetry-label">VISIBILITY & CLOUDS</span>
+              <i data-lucide="eye" class="telemetry-header-icon"></i>
+            </div>
+            <div class="telemetry-body">
+              <div class="telemetry-main-val">
+                <span id="visibility-val">10.0</span>
+                <span class="telemetry-unit">km</span>
+              </div>
+              <div class="telemetry-sub-detail">
+                <span>Cloud Cover: <strong id="cloud-cover-val">35%</strong></span>
+                <span id="visibility-desc">Crystal Clear</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span>AETHERIA METEOROLOGY ENGINE</span>
+          <span class="footer-sep">|</span>
+          <span>Task 3 Asynchronous REST Weather Portal</span>
+        </div>
+        <div class="footer-credits">
+          <span>Data Sources: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo REST API</a> & <a href="https://openweathermap.org/" target="_blank" rel="noopener">OpenWeatherMap</a></span>
+          <span class="footer-sep">•</span>
+          <span>Live Async/Await Architecture</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- API Settings Modal -->
+  <div id="api-modal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <i data-lucide="sliders" class="modal-icon"></i>
+          <h3>Weather Provider Configuration</h3>
+        </div>
+        <button id="modal-close-btn" class="modal-close-btn"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc">
+          Aetheria uses high-precision Open-Meteo REST endpoints by default with <strong>zero API keys required</strong>. You can also plug in your custom OpenWeatherMap API key if needed for evaluation.
+        </p>
+
+        <div class="form-group">
+          <label for="provider-select">Active REST Provider:</label>
+          <select id="provider-select" class="form-select">
+            <option value="open-meteo" selected>Open-Meteo Live API (Free, Global, No Key Needed)</option>
+            <option value="openweathermap">OpenWeatherMap API (Custom API Key)</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="owm-key-group" style="display: none;">
+          <label for="owm-api-key">OpenWeatherMap API Key:</label>
+          <input type="text" id="owm-api-key" class="form-input" placeholder="Paste your 32-char OpenWeatherMap API Key here">
+          <span class="input-tip">Key is saved securely in your browser's LocalStorage.</span>
+        </div>
+
+        <div class="form-group">
+          <label>Atmospheric Particle Effects:</label>
+          <div class="toggle-checkbox-row">
+            <input type="checkbox" id="particle-toggle" checked>
+            <label for="particle-toggle">Enable Real-Time Dynamic Sky Canvas (Rain, Snow, Sun Flares, Stars)</label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="modal-save-btn" class="btn-primary">Save Settings & Refresh</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Fullscreen Overlay -->
+  <div id="app-loading-screen" class="loading-screen hidden">
+    <div class="loader-content">
+      <div class="pulsing-sun-loader">
+        <div class="loader-core"></div>
+        <div class="loader-ring"></div>
+      </div>
+      <h3 id="loader-title">Synthesizing Atmospheric Data...</h3>
+      <p id="loader-subtitle">Querying global satellite and radar endpoints</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/effects.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

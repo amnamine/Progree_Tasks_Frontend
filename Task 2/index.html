@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <!-- SEO & Social Meta Tags -->
+  <title>SYNAPSE OS — Next-Generation Autonomous Neural Workspace</title>
+  <meta name="description" content="Experience SYNAPSE OS: the world's first spatial AI operating engine. Accelerate software architecture, neural synthesis, and cognitive orchestration with sub-millisecond latency.">
+  <meta name="keywords" content="AI workspace, spatial computing, neural engine, autonomous AI, developer tools, machine intelligence">
+  <meta name="theme-color" content="#0a0b10">
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://synapse-os.ai/">
+  <meta property="og:title" content="SYNAPSE OS — The Spatial Neural Engine">
+  <meta property="og:description" content="Autonomous cognitive orchestration and spatial AI workflows with real-time neural compilation.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80">
+  
+  <!-- Google Fonts Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Ambient Dynamic Canvas Background -->
+  <canvas id="ambient-canvas" class="ambient-canvas" aria-hidden="true"></canvas>
+
+  <!-- Notification Banner -->
+  <aside class="announcement-bar" role="region" aria-label="Announcement">
+    <div class="announcement-content">
+      <span class="badge-pulse">v3.4 RELEASE</span>
+      <span class="announcement-text">SYNAPSE Quantum Kernel is live: 4.8x faster spatial compilation.</span>
+      <a href="#demo" class="announcement-link" id="announcement-cta">Explore Benchmarks &rarr;</a>
+    </div>
+    <button class="announcement-close" id="close-announcement" aria-label="Dismiss announcement">&times;</button>
+  </aside>
+
+  <!-- Sticky Main Header & Navigation -->
+  <header class="site-header" id="site-header">
+    <div class="container header-container">
+      <!-- Logo Branding -->
+      <a href="#hero" class="brand-logo" aria-label="SYNAPSE OS Homepage">
+        <div class="logo-symbol">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-svg">
+            <circle cx="20" cy="20" r="18" stroke="url(#logo-grad)" stroke-width="2" stroke-dasharray="4 2"/>
+            <circle cx="20" cy="20" r="10" fill="url(#logo-core)" />
+            <path d="M12 20L20 12L28 20L20 28L12 20Z" fill="#0ff" fill-opacity="0.6"/>
+            <circle cx="20" cy="20" r="3" fill="#fff"/>
+            <defs>
+              <linearGradient id="logo-grad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#00F0FF"/>
+                <stop offset="0.5" stop-color="#7000FF"/>
+                <stop offset="1" stop-color="#FF007A"/>
+              </linearGradient>
+              <radialGradient id="logo-core" cx="0.5" cy="0.5" r="0.5" fx="0.3" fy="0.3">
+                <stop stop-color="#00F0FF" stop-opacity="0.8"/>
+                <stop offset="1" stop-color="#7000FF" stop-opacity="0.2"/>
+              </radialGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="brand-name">SYNAPSE<span class="brand-dot">.OS</span></span>
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="main-nav" id="main-nav" aria-label="Main Navigation">
+        <ul class="nav-list" role="list">
+          <li class="nav-item"><a href="#features" class="nav-link">Capabilities</a></li>
+          <li class="nav-item"><a href="#demo" class="nav-link">Live Engine</a></li>
+          <li class="nav-item"><a href="#architecture" class="nav-link">Architecture</a></li>
+          <li class="nav-item"><a href="#calculator" class="nav-link">ROI Engine</a></li>
+          <li class="nav-item"><a href="#pricing" class="nav-link">Pricing</a></li>
+          <li class="nav-item"><a href="#faq" class="nav-link">FAQ</a></li>
+        </ul>
+      </nav>
+
+      <!-- Header Actions & Controls -->
+      <div class="header-actions">
+        <!-- Command Palette Trigger -->
+        <button class="cmd-trigger-btn" id="cmd-trigger" aria-label="Open Command Palette (Ctrl+K)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <span class="cmd-text">Search</span>
+          <kbd class="cmd-kbd">Ctrl K</kbd>
+        </button>
+
+        <!-- Theme Color Mode Switcher -->
+        <button class="theme-switcher-btn" id="theme-toggle" aria-label="Toggle Color Theme" title="Toggle Visual Mode">
+          <span class="theme-icon sun-icon">☀️</span>
+          <span class="theme-icon moon-icon">🌙</span>
+        </button>
+
+        <!-- CTA Buttons -->
+        <a href="#pricing" class="btn btn-outline nav-cta-outline">Sign In</a>
+        <a href="#demo" class="btn btn-primary nav-cta-primary">
+          <span>Deploy Alpha</span>
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+
+        <!-- Mobile Hamburger Toggle -->
+        <button class="hamburger-btn" id="mobile-toggle" aria-expanded="false" aria-controls="mobile-drawer" aria-label="Toggle mobile menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu Overlay -->
+  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <div class="drawer-backdrop" id="drawer-backdrop"></div>
+    <div class="drawer-panel">
+      <div class="drawer-header">
+        <div class="brand-logo">
+          <div class="logo-symbol small"></div>
+          <span class="brand-name">SYNAPSE.OS</span>
+        </div>
+        <button class="drawer-close" id="drawer-close" aria-label="Close navigation drawer">&times;</button>
+      </div>
+      <nav class="drawer-nav" aria-label="Mobile Navigation Drawer">
+        <ul class="drawer-list" role="list">
+          <li><a href="#features" class="drawer-link">Capabilities</a></li>
+          <li><a href="#demo" class="drawer-link">Live Engine</a></li>
+          <li><a href="#architecture" class="drawer-link">Architecture</a></li>
+          <li><a href="#calculator" class="drawer-link">ROI Engine</a></li>
+          <li><a href="#pricing" class="drawer-link">Pricing Plans</a></li>
+          <li><a href="#faq" class="drawer-link">FAQ</a></li>
+          <li><a href="#community" class="drawer-link">Community</a></li>
+        </ul>
+      </nav>
+      <div class="drawer-footer">
+        <a href="#pricing" class="btn btn-primary btn-block">Launch Neural Node</a>
+        <div class="drawer-meta">
+          <span>Latency: &lt;1.2ms</span>
+          <span class="status-indicator online">System Operational</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="hero">
+      <div class="hero-glow-blob blob-1"></div>
+      <div class="hero-glow-blob blob-2"></div>
+      <div class="container hero-container">
+        <div class="hero-badge-wrapper">
+          <div class="hero-badge" id="hero-badge">
+            <span class="pulse-dot"></span>
+            <span class="badge-title">SYNAPSE-4 TURBO ARCHITECTURE</span>
+            <span class="badge-tag">ISO-27001 Certified</span>
+          </div>
+        </div>
+
+        <h1 class="hero-headline">
+          The Spatial Neural Engine <br>
+          <span class="gradient-text animated-gradient">For Autonomous Computing</span>
+        </h1>
+
+        <p class="hero-subline">
+          SYNAPSE OS unifies distributed LLM clusters, sensory spatial inputs, and self-optimizing pipelines into a hyper-responsive reactive layer. Built for engineers architecting the autonomous era.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="#demo" class="btn btn-hero-primary" id="hero-get-started">
+            <span>Initialize Engine Free</span>
+            <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#architecture" class="btn btn-hero-secondary" id="hero-view-docs">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span>Watch 2-Min Runtime</span>
+          </a>
+        </div>
+
+        <!-- Terminal Quick-Copy Bar -->
+        <div class="hero-terminal-pill" id="hero-terminal-pill">
+          <span class="pill-prefix">$</span>
+          <code class="pill-code">curl -fsSL https://synapse.sh/install | bash</code>
+          <button class="pill-copy-btn" id="copy-install-btn" aria-label="Copy install command" data-tooltip="Copy command">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          </button>
+        </div>
+
+        <!-- Interactive Hero Hologram HUD Showcase -->
+        <div class="hero-visual-wrapper">
+          <div class="hero-hud-card" id="hero-hud" data-tilt>
+            <!-- Top Window Bar -->
+            <div class="hud-top-bar">
+              <div class="hud-controls">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+              <div class="hud-title">synapse-core-v3.4.0 — cluster://us-east.quantum.neural.mesh</div>
+              <div class="hud-live-tag">
+                <span class="live-dot"></span> LIVE SYNC
+              </div>
+            </div>
+
+            <!-- Main HUD Display Grid -->
+            <div class="hud-grid">
+              <!-- Node Matrix Visualizer -->
+              <div class="hud-col hud-graph-col">
+                <div class="hud-card-header">
+                  <span class="hud-label">SYNAPTIC TOPOLOGY MAP</span>
+                  <span class="hud-chip">99.999% HEALTH</span>
+                </div>
+                <div class="neural-network-viz" id="neural-viz">
+                  <div class="synapse-node active" style="top:25%; left:20%;" data-node="Input Sensory Core"><span>Sensory</span></div>
+                  <div class="synapse-node" style="top:60%; left:25%;" data-node="Vector Store"><span>Vector</span></div>
+                  <div class="synapse-node primary" style="top:40%; left:50%;" data-node="Synapse Hub"><span>Synapse Core</span></div>
+                  <div class="synapse-node" style="top:20%; left:80%;" data-node="Quantized LLM"><span>Agent 01</span></div>
+                  <div class="synapse-node" style="top:70%; left:75%;" data-node="Execution Runtime"><span>Wasm Sandbox</span></div>
+                  <svg class="node-connections-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <line x1="20" y1="25" x2="50" y2="40" stroke="rgba(0,240,255,0.4)" stroke-width="1.5" stroke-dasharray="3 3"/>
+                    <line x1="25" y1="60" x2="50" y2="40" stroke="rgba(112,0,255,0.4)" stroke-width="1.5"/>
+                    <line x1="50" y1="40" x2="80" y2="20" stroke="rgba(0,240,255,0.7)" stroke-width="2"/>
+                    <line x1="50" y1="40" x2="75" y2="70" stroke="rgba(255,0,122,0.5)" stroke-width="1.5"/>
+                  </svg>
+                </div>
+                <div class="hud-status-row">
+                  <span class="status-item"><strong id="metric-throughput">148,290</strong> ops/sec</span>
+                  <span class="status-item"><strong id="metric-latency">0.82</strong> ms latency</span>
+                  <span class="status-item"><strong id="metric-nodes">64</strong> active shards</span>
+                </div>
+              </div>
+
+              <!-- Live Stream Log Terminal -->
+              <div class="hud-col hud-stream-col">
+                <div class="hud-card-header">
+                  <span class="hud-label">COGNITIVE LOG MATRIX</span>
+                  <span class="hud-chip code">TLS-1.3 ENCRYPTED</span>
+                </div>
+                <div class="hud-terminal-feed" id="hud-terminal-feed">
+                  <div class="log-row info"><span class="timestamp">[15:36:01]</span> <span class="prefix">NODE:</span> Quantum mesh initialized in memory buffer</div>
+                  <div class="log-row success"><span class="timestamp">[15:36:02]</span> <span class="prefix">AUTONOMY:</span> 842 sub-agents coordinated across 12 zones</div>
+                  <div class="log-row accent"><span class="timestamp">[15:36:03]</span> <span class="prefix">OPTIMIZER:</span> JIT speculative decoding active (-64% memory)</div>
+                  <div class="log-row info"><span class="timestamp">[15:36:04]</span> <span class="prefix">STREAM:</span> Vector telemetry stream hooked into WebRTC bus</div>
+                  <div class="log-row pending typing-cursor"><span class="timestamp">[15:36:05]</span> <span class="prefix">WAIT:</span> Awaiting sensory vector ingestion...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Proof Logos Grid -->
+        <div class="hero-social-proof">
+          <p class="proof-heading">TRUSTED BY TIER-1 AI LABS & FORWARD-THINKING ENGINEERING TEAMS</p>
+          <div class="logo-marquee-wrapper">
+            <div class="logo-marquee-track">
+              <span class="proof-logo"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> AETHER_LABS</span>
+              <span class="proof-logo"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24M14.83 9.17l4.24-4.24M14.83 14.83l4.24 4.24M9.17 14.83l-4.24 4.24"/></svg> QUANTUM_AI</span>
+              <span class="proof-logo"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/></svg> NEURAL_CORE</span>
+              <span class="proof-logo"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> HYPERION</span>
+              <span class="proof-logo"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg> SKY_SCALE</span>
+              <span class="proof-logo"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> AETHER_LABS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE METRICS BANNER / KEY STATS -->
+    <section class="stats-counter-section" id="stats" aria-label="Key Performance Statistics">
+      <div class="container">
+        <div class="stats-grid">
+          <article class="stat-card" data-tilt>
+            <div class="stat-icon-wrap">⚡</div>
+            <div class="stat-number-wrapper">
+              <span class="stat-number" data-target="99.99">0</span><span class="stat-suffix">%</span>
+            </div>
+            <h3 class="stat-label">Deterministic Uptime</h3>
+            <p class="stat-desc">Zero-downtime hot state migration across distributed hybrid edge clusters.</p>
+          </article>
+
+          <article class="stat-card" data-tilt>
+            <div class="stat-icon-wrap">🚀</div>
+            <div class="stat-number-wrapper">
+              <span class="stat-number" data-target="0.75">0</span><span class="stat-suffix">ms</span>
+            </div>
+            <h3 class="stat-label">Inference Dispatch</h3>
+            <p class="stat-desc">Ultra low latency memory mapped zero-copy IPC bus architecture.</p>
+          </article>
+
+          <article class="stat-card" data-tilt>
+            <div class="stat-icon-wrap">💎</div>
+            <div class="stat-number-wrapper">
+              <span class="stat-number" data-target="14.2">0</span><span class="stat-suffix">M+</span>
+            </div>
+            <h3 class="stat-label">Daily Neural Syntheses</h3>
+            <p class="stat-desc">Autonomous tasks solved continuously without human handoffs.</p>
+          </article>
+
+          <article class="stat-card" data-tilt>
+            <div class="stat-icon-wrap">🛡️</div>
+            <div class="stat-number-wrapper">
+              <span class="stat-number" data-target="100">0</span><span class="stat-suffix">%</span>
+            </div>
+            <h3 class="stat-label">Zero-Trust Isolation</h3>
+            <p class="stat-desc">MicroVM sandboxing with cryptographic state proofs on every cycle.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAPABILITIES / VALUE PROPOSITION SECTION (GRID) -->
+    <section class="features-section" id="features">
+      <div class="container">
+        <header class="section-header text-center">
+          <div class="section-badge">CORE CAPABILITIES</div>
+          <h2 class="section-title">Engineered to Transcend <br><span class="gradient-text">Traditional Computing Boundaries</span></h2>
+          <p class="section-subtitle">A synthesis of low-level systems engineering, neural vector routing, and spatial awareness.</p>
+        </header>
+
+        <!-- Dynamic Grid Feature Cards -->
+        <div class="features-grid">
+          <!-- Featured Big Card 1 -->
+          <article class="feature-card span-2 highlight-card" data-tilt>
+            <div class="feature-card-inner">
+              <div class="card-pill">AUTONOMOUS DISPATCH</div>
+              <h3 class="card-heading">Multi-Agent Swarm Orchestration</h3>
+              <p class="card-text">
+                Coordinate thousands of asynchronous intelligent agents in real-time. Dynamic task decomposition with consensus-driven validation prevents hallucination cascades and ensures strict schema adherence.
+              </p>
+              <div class="feature-interactive-mini">
+                <div class="mini-swarm-display">
+                  <div class="swarm-node active pulse">Master Coprocessor</div>
+                  <div class="swarm-branch">
+                    <span class="sub-node">Worker α (Code Gen)</span>
+                    <span class="sub-node">Worker β (Sec Audit)</span>
+                    <span class="sub-node">Worker γ (Load Test)</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer-tags">
+                <span>Raft Consensus</span>
+                <span>Sub-millisecond IPC</span>
+                <span>State Rollbacks</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="feature-card" data-tilt>
+            <div class="feature-card-inner">
+              <div class="card-icon-bubble">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+              </div>
+              <h3 class="card-heading">Zero-Copy Memory Bus</h3>
+              <p class="card-text">Direct ring buffer access between GPU VRAM and neural compilation graphs eliminates memory paging bottleneck.</p>
+              <ul class="feature-checklist">
+                <li>Direct PCIe Gen5 Pipeline</li>
+                <li>CUDA / Metal unified bridge</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="feature-card" data-tilt>
+            <div class="feature-card-inner">
+              <div class="card-icon-bubble">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </div>
+              <h3 class="card-heading">Cryptographic Sandboxing</h3>
+              <p class="card-text">Every agent execution is isolated inside ephemeral WASM MicroVMs with verifiable zero-knowledge proofs.</p>
+              <ul class="feature-checklist">
+                <li>ZK-SNARK execution proofs</li>
+                <li>Fine-grained POSIX limits</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Card 4 -->
+          <article class="feature-card" data-tilt>
+            <div class="feature-card-inner">
+              <div class="card-icon-bubble">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 12 2.1 10a10 10 0 0 0 17 9.9"/></svg>
+              </div>
+              <h3 class="card-heading">Continuous Spatial Telemetry</h3>
+              <p class="card-text">Real-time dynamic visualization of multidimensional vector embeddings in 3D projective hyperspace.</p>
+              <ul class="feature-checklist">
+                <li>100,000+ vectors / 60 FPS</li>
+                <li>Hierarchical cluster slicing</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Featured Big Card 5 -->
+          <article class="feature-card span-2 highlight-card-secondary" data-tilt>
+            <div class="feature-card-inner">
+              <div class="card-pill">DYNAMIC COMPILATION</div>
+              <h3 class="card-heading">Self-Refining Neural Pipelines</h3>
+              <p class="card-text">
+                The SYNAPSE JIT compiler analyzes execution traces and automatically recompiles slow neural reasoning paths into specialized, quantized kernel operations on the fly.
+              </p>
+              <div class="pipeline-flow-diagram">
+                <div class="pipe-step"><span>Trace</span><small>Live Metrics</small></div>
+                <div class="pipe-arrow">&rarr;</div>
+                <div class="pipe-step active"><span>Speculate</span><small>Graph Pruning</small></div>
+                <div class="pipe-arrow">&rarr;</div>
+                <div class="pipe-step"><span>Quantize</span><small>FP8 Turbo Kernel</small></div>
+              </div>
+              <div class="card-footer-tags">
+                <span>Autonomous Optimization</span>
+                <span>-78% Token Overhead</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE ENGINE INTERACTIVE PLAYGROUND (STANDOUT FEATURE) -->
+    <section class="interactive-demo-section" id="demo">
+      <div class="container">
+        <header class="section-header text-center">
+          <div class="section-badge">INTERACTIVE PLAYGROUND</div>
+          <h2 class="section-title">Experience SYNAPSE OS <br><span class="gradient-text">In Your Browser</span></h2>
+          <p class="section-subtitle">Select a scenario, tune neural parameters, and simulate autonomous execution in real-time.</p>
+        </header>
+
+        <div class="sandbox-container">
+          <!-- Sandbox Controls Sidebar -->
+          <div class="sandbox-sidebar">
+            <div class="sidebar-block">
+              <label class="control-label" for="scenario-select">Workload Preset:</label>
+              <select id="scenario-select" class="custom-select">
+                <option value="code-refactor">Autonomous Code Refactor & CI Pipeline</option>
+                <option value="swarm-finance">High-Frequency Market Intelligence Swarm</option>
+                <option value="spatial-3d">Spatial Neural Reconstruction (LiDAR + RGB)</option>
+                <option value="cyber-defense">Zero-Day Autonomous Defense Sentinel</option>
+              </select>
+            </div>
+
+            <div class="sidebar-block">
+              <div class="control-header-flex">
+                <label for="agent-slider" class="control-label">Active Worker Agents:</label>
+                <span class="control-val" id="agent-count-val">16 Nodes</span>
+              </div>
+              <input type="range" id="agent-slider" min="4" max="64" value="16" step="4" class="custom-slider">
+            </div>
+
+            <div class="sidebar-block">
+              <div class="control-header-flex">
+                <label for="temperature-slider" class="control-label">Heuristic Temperature:</label>
+                <span class="control-val" id="temp-val">0.35</span>
+              </div>
+              <input type="range" id="temperature-slider" min="0.0" max="1.0" value="0.35" step="0.05" class="custom-slider">
+            </div>
+
+            <div class="sidebar-block">
+              <span class="control-label">Execution Mode:</span>
+              <div class="mode-toggles">
+                <button class="mode-btn active" data-mode="speculative">Speculative JIT</button>
+                <button class="mode-btn" data-mode="deterministic">Deterministic ZK</button>
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-block" id="execute-sim-btn">
+              <span id="btn-sim-text">Run Neural Execution</span>
+              <span class="spinner" id="sim-spinner" style="display:none;"></span>
+            </button>
+          </div>
+
+          <!-- Sandbox Live Interactive Output Window -->
+          <div class="sandbox-viewport">
+            <div class="viewport-header">
+              <div class="tab-pills">
+                <button class="tab-pill active" data-tab="terminal">Execution Terminal</button>
+                <button class="tab-pill" data-tab="graph">Live Topology</button>
+                <button class="tab-pill" data-tab="metrics">Telemetry Charts</button>
+              </div>
+              <div class="viewport-stats">
+                <span class="badge-status online" id="sim-status">ENGINE READY</span>
+              </div>
+            </div>
+
+            <!-- Tab 1: Terminal -->
+            <div class="tab-pane active" id="tab-terminal">
+              <div class="terminal-body" id="sandbox-terminal-output">
+                <p class="t-line dim">// SYNAPSE OS Sandbox Environment Ready.</p>
+                <p class="t-line dim">// Press "Run Neural Execution" to simulate real-time workload.</p>
+                <p class="t-line highlight">> Loaded preset: Autonomous Code Refactor & CI Pipeline</p>
+              </div>
+            </div>
+
+            <!-- Tab 2: Graph -->
+            <div class="tab-pane" id="tab-graph">
+              <div class="topology-canvas-wrap">
+                <div class="interactive-topo-grid" id="topo-grid">
+                  <!-- Nodes generated by JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab 3: Metrics -->
+            <div class="tab-pane" id="tab-metrics">
+              <div class="metrics-grid">
+                <div class="metric-box">
+                  <div class="m-title">Throughput</div>
+                  <div class="m-val" id="metric-tps">4,280 <small>tokens/s</small></div>
+                  <div class="m-bar"><div class="m-fill" style="width: 85%;"></div></div>
+                </div>
+                <div class="metric-box">
+                  <div class="m-title">Memory Pressure</div>
+                  <div class="m-val" id="metric-mem">2.1 <small>GB / 16 GB</small></div>
+                  <div class="m-bar"><div class="m-fill accent" style="width: 25%;"></div></div>
+                </div>
+                <div class="metric-box">
+                  <div class="m-title">Convergence Confidence</div>
+                  <div class="m-val" id="metric-conf">99.82 <small>%</small></div>
+                  <div class="m-bar"><div class="m-fill green" style="width: 98%;"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARCHITECTURE & DEEP DIVE SECTION (TABS / ACCORDION) -->
+    <section class="architecture-section" id="architecture">
+      <div class="container">
+        <div class="arch-split-grid">
+          <div class="arch-content">
+            <div class="section-badge">DEEP DIVE ARCHITECTURE</div>
+            <h2 class="section-title">Built from Metal Up <br><span class="gradient-text">For Quantum Speed</span></h2>
+            <p class="section-subtitle">
+              Unlike traditional API wrappers, SYNAPSE OS executes directly above bare hardware using a custom micro-kernel designed for high-density tensor parallelism.
+            </p>
+
+            <div class="arch-accordion" id="arch-accordion">
+              <div class="accordion-item active">
+                <button class="accordion-trigger" aria-expanded="true">
+                  <span class="acc-num">01</span>
+                  <span class="acc-title">Hyper-Parallel Vector Bus</span>
+                  <span class="acc-icon">+</span>
+                </button>
+                <div class="accordion-panel">
+                  <p>Enables zero-latency lockless sharing of activations across all worker threads. Zero heap allocation on critical hot-paths guarantees frame-consistent deterministic execution.</p>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-trigger" aria-expanded="false">
+                  <span class="acc-num">02</span>
+                  <span class="acc-title">Speculative Tree Branching</span>
+                  <span class="acc-icon">+</span>
+                </button>
+                <div class="accordion-panel">
+                  <p>Computes parallel candidate trajectories ahead of time. Low-probability paths are immediately reclaimed without wasting compute cycles, multiplying effective throughput by 4.2x.</p>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-trigger" aria-expanded="false">
+                  <span class="acc-num">03</span>
+                  <span class="acc-title">Self-Healing Memory Graph</span>
+                  <span class="acc-icon">+</span>
+                </button>
+                <div class="accordion-panel">
+                  <p>Continuous dynamic vector indexing ensures contextual drift is corrected in real-time. Automated graph compaction reduces token bloat by up to 70% over multi-hour sessions.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="arch-visual" data-tilt>
+            <div class="stack-layers-card">
+              <div class="layer-item highlight-1">
+                <span class="layer-tag">L4</span>
+                <div class="layer-info">
+                  <strong>Spatial UI / Natural Language OS Interface</strong>
+                  <small>WebRTC, WebGPU, Holographic Viewport</small>
+                </div>
+              </div>
+              <div class="layer-connector"></div>
+              <div class="layer-item highlight-2">
+                <span class="layer-tag">L3</span>
+                <div class="layer-info">
+                  <strong>Swarm Consensus & Autonomous Planner</strong>
+                  <small>Raft Protocol, Dynamic Tree Search, Schema Guard</small>
+                </div>
+              </div>
+              <div class="layer-connector"></div>
+              <div class="layer-item highlight-3">
+                <span class="layer-tag">L2</span>
+                <div class="layer-info">
+                  <strong>SYNAPSE JIT Neural Compiler</strong>
+                  <small>FP8 Quantization, MicroVM Sandboxing</small>
+                </div>
+              </div>
+              <div class="layer-connector"></div>
+              <div class="layer-item highlight-4">
+                <span class="layer-tag">L1</span>
+                <div class="layer-info">
+                  <strong>Bare-Metal Vector Hardware Layer</strong>
+                  <small>Unified Memory Bridge (CUDA / ROCm / Metal)</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REAL-TIME ROI & INFRASTRUCTURE CALCULATOR -->
+    <section class="calculator-section" id="calculator">
+      <div class="container">
+        <header class="section-header text-center">
+          <div class="section-badge">ROI & VELOCITY CALCULATOR</div>
+          <h2 class="section-title">Calculate Your Engineering <br><span class="gradient-text">Efficiency Multiplier</span></h2>
+          <p class="section-subtitle">See how migrating to SYNAPSE OS slashes cloud inference spend and accelerates sprint velocity.</p>
+        </header>
+
+        <div class="calc-card" data-tilt>
+          <div class="calc-grid">
+            <div class="calc-inputs">
+              <div class="calc-field">
+                <div class="calc-label-row">
+                  <label for="calc-engineers">Engineering Team Size:</label>
+                  <span class="calc-val-badge" id="val-engineers">25 Engineers</span>
+                </div>
+                <input type="range" id="calc-engineers" min="5" max="250" value="25" step="5" class="custom-slider">
+              </div>
+
+              <div class="calc-field">
+                <div class="calc-label-row">
+                  <label for="calc-tokens">Monthly AI Tokens Processed:</label>
+                  <span class="calc-val-badge" id="val-tokens">100M Tokens</span>
+                </div>
+                <input type="range" id="calc-tokens" min="10" max="1000" value="100" step="10" class="custom-slider">
+              </div>
+
+              <div class="calc-field">
+                <div class="calc-label-row">
+                  <label for="calc-gpu">Current Monthly Cloud Spend ($):</label>
+                  <span class="calc-val-badge" id="val-spend">$12,000 / mo</span>
+                </div>
+                <input type="range" id="calc-gpu" min="2000" max="100000" value="12000" step="1000" class="custom-slider">
+              </div>
+            </div>
+
+            <div class="calc-results">
+              <div class="results-heading">ESTIMATED ANNUAL IMPACT</div>
+              <div class="roi-metric">
+                <span class="roi-num gradient-text" id="res-savings">$92,400</span>
+                <span class="roi-sub">Estimated Annual Cloud & Token Savings</span>
+              </div>
+              <div class="roi-sub-stats">
+                <div class="sub-stat">
+                  <strong id="res-hours">1,850 hrs</strong>
+                  <span>Engineering hours unlocked</span>
+                </div>
+                <div class="sub-stat">
+                  <strong id="res-speedup">4.8x</strong>
+                  <span>Iteration speedup factor</span>
+                </div>
+              </div>
+              <a href="#pricing" class="btn btn-primary btn-block">Claim Your Efficiency Tier</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS CAROUSEL SECTION -->
+    <section class="testimonials-section" id="testimonials">
+      <div class="container">
+        <header class="section-header text-center">
+          <div class="section-badge">ENGINEERING LEADERSHIP</div>
+          <h2 class="section-title">Tested in Production by <br><span class="gradient-text">World-Class Teams</span></h2>
+        </header>
+
+        <div class="testimonial-carousel" id="testimonial-carousel">
+          <div class="carousel-track-container">
+            <div class="carousel-track" id="carousel-track">
+              <!-- Slide 1 -->
+              <article class="carousel-slide current-slide">
+                <div class="testimonial-card">
+                  <div class="rating-stars">★★★★★</div>
+                  <blockquote class="testimonial-quote">
+                    "SYNAPSE OS cut our multi-agent orchestration latency from 450ms to 12ms flat. Our team shipped our real-time copilot four months ahead of schedule."
+                  </blockquote>
+                  <div class="author-meta">
+                    <div class="author-avatar" style="background: linear-gradient(135deg, #00f0ff, #7000ff);">EL</div>
+                    <div class="author-details">
+                      <cite class="author-name">Elena Rostova</cite>
+                      <span class="author-role">VP of AI Infrastructure, AetherLabs</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Slide 2 -->
+              <article class="carousel-slide">
+                <div class="testimonial-card">
+                  <div class="rating-stars">★★★★★</div>
+                  <blockquote class="testimonial-quote">
+                    "The zero-knowledge microVM sandboxing gave our security compliance team immediate peace of mind. Deploying 500 autonomous agents took less than an afternoon."
+                  </blockquote>
+                  <div class="author-meta">
+                    <div class="author-avatar" style="background: linear-gradient(135deg, #ff007a, #7000ff);">DK</div>
+                    <div class="author-details">
+                      <cite class="author-name">Devon Kincaid</cite>
+                      <span class="author-role">Chief Architect, Hyperion Financial</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Slide 3 -->
+              <article class="carousel-slide">
+                <div class="testimonial-card">
+                  <div class="rating-stars">★★★★★</div>
+                  <blockquote class="testimonial-quote">
+                    "We eliminated token redundancy and slashed GPU compute invoices by 68% in the first 30 days. The dynamic JIT compilation is nothing short of sorcery."
+                  </blockquote>
+                  <div class="author-meta">
+                    <div class="author-avatar" style="background: linear-gradient(135deg, #00ffaa, #0070f3);">SM</div>
+                    <div class="author-details">
+                      <cite class="author-name">Sarah Chen-Mendez</cite>
+                      <span class="author-role">Principal Systems Engineer, SkyScale Robotics</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Carousel Controls -->
+          <div class="carousel-nav">
+            <button class="carousel-btn prev" id="carousel-prev" aria-label="Previous testimonial">&larr;</button>
+            <div class="carousel-dots" id="carousel-dots">
+              <button class="dot-indicator active" data-index="0" aria-label="Go to slide 1"></button>
+              <button class="dot-indicator" data-index="1" aria-label="Go to slide 2"></button>
+              <button class="dot-indicator" data-index="2" aria-label="Go to slide 3"></button>
+            </div>
+            <button class="carousel-btn next" id="carousel-next" aria-label="Next testimonial">&rarr;</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRANSPARENT PRICING SECTION WITH BILLING TOGGLE -->
+    <section class="pricing-section" id="pricing">
+      <div class="container">
+        <header class="section-header text-center">
+          <div class="section-badge">TRANSPARENT TIERS</div>
+          <h2 class="section-title">Scale from Hacker to <br><span class="gradient-text">Global Enterprise</span></h2>
+          <p class="section-subtitle">Predictable, transparent node pricing. No hidden egress fees or licensing gotchas.</p>
+          
+          <!-- Billing Cycle Switcher -->
+          <div class="pricing-toggle-wrapper">
+            <span class="toggle-label" id="monthly-label">Monthly</span>
+            <button class="pricing-switch" id="billing-toggle" role="switch" aria-checked="false" aria-label="Toggle annual billing discount">
+              <span class="switch-ball"></span>
+            </button>
+            <span class="toggle-label" id="annual-label">Annual <span class="discount-badge">SAVE 25%</span></span>
+          </div>
+        </header>
+
+        <div class="pricing-grid">
+          <!-- Tier 1: Developer -->
+          <article class="pricing-card" data-tilt>
+            <div class="card-badge-header">STARTER</div>
+            <h3 class="tier-name">Developer Node</h3>
+            <p class="tier-desc">Ideal for individual researchers, builders, and indie prototype engineers.</p>
+            <div class="price-box">
+              <span class="currency">$</span>
+              <span class="price-amount" data-monthly="0" data-annual="0">0</span>
+              <span class="price-period">/ forever</span>
+            </div>
+            <ul class="pricing-features">
+              <li><span class="check">✓</span> Up to 4 Concurrent Swarm Agents</li>
+              <li><span class="check">✓</span> 50,000 Neural Ops / month</li>
+              <li><span class="check">✓</span> Community Discord & Docs</li>
+              <li><span class="check">✓</span> Local WASM MicroVM Sandbox</li>
+              <li class="disabled"><span class="cross">✕</span> Dedicated GPU IPC Bridge</li>
+            </ul>
+            <button class="btn btn-outline btn-block pricing-cta" data-tier="Developer">Get Started Free</button>
+          </article>
+
+          <!-- Tier 2: Pro (Featured) -->
+          <article class="pricing-card popular" data-tilt>
+            <div class="popular-ribbon">MOST POPULAR</div>
+            <div class="card-badge-header accent">PRO CLUSTER</div>
+            <h3 class="tier-name">Autonomous Pro</h3>
+            <p class="tier-desc">Engineered for fast-growing engineering teams scaling autonomous agents.</p>
+            <div class="price-box">
+              <span class="currency">$</span>
+              <span class="price-amount" data-monthly="79" data-annual="59">79</span>
+              <span class="price-period" id="pro-period">/ user / mo</span>
+            </div>
+            <ul class="pricing-features">
+              <li><span class="check">✓</span> Up to 64 Concurrent Swarm Agents</li>
+              <li><span class="check">✓</span> 2.5M Neural Ops / month</li>
+              <li><span class="check">✓</span> Sub-1ms High Priority IPC Bridge</li>
+              <li><span class="check">✓</span> Dynamic JIT Kernel Compilation</li>
+              <li><span class="check">✓</span> 99.95% SLA Guarantee</li>
+            </ul>
+            <button class="btn btn-primary btn-block pricing-cta" data-tier="Autonomous Pro">Deploy Pro Cluster</button>
+          </article>
+
+          <!-- Tier 3: Enterprise -->
+          <article class="pricing-card" data-tilt>
+            <div class="card-badge-header">ENTERPRISE</div>
+            <h3 class="tier-name">Quantum Hybrid</h3>
+            <p class="tier-desc">Custom on-premise air-gapped deployments with custom silicon acceleration.</p>
+            <div class="price-box">
+              <span class="currency">$</span>
+              <span class="price-amount" data-monthly="349" data-annual="269">349</span>
+              <span class="price-period" id="ent-period">/ node / mo</span>
+            </div>
+            <ul class="pricing-features">
+              <li><span class="check">✓</span> Unlimited Swarm Agents & Mesh Nodes</li>
+              <li><span class="check">✓</span> Unlimited Neural Invocations</li>
+              <li><span class="check">✓</span> Air-gapped Zero-Trust Architecture</li>
+              <li><span class="check">✓</span> Custom PCIe Gen5 Hardware Drivers</li>
+              <li><span class="check">✓</span> 24/7 Dedicated Systems Engineering Team</li>
+            </ul>
+            <button class="btn btn-outline btn-block pricing-cta" data-tier="Enterprise Quantum">Contact Solutions Architect</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FREQUENTLY ASKED QUESTIONS (ACCORDION) -->
+    <section class="faq-section" id="faq">
+      <div class="container">
+        <header class="section-header text-center">
+          <div class="section-badge">COMMON QUESTIONS</div>
+          <h2 class="section-title">Frequently Asked <br><span class="gradient-text">Questions</span></h2>
+        </header>
+
+        <div class="faq-accordion-list" id="faq-list">
+          <div class="faq-card">
+            <button class="faq-question" aria-expanded="false">
+              <span>How does SYNAPSE OS differ from orchestration frameworks like LangChain?</span>
+              <span class="faq-chevron">&darr;</span>
+            </button>
+            <div class="faq-answer">
+              <p>SYNAPSE OS is a low-level systems operating environment compiled in Rust and C++, not a high-level Python glue library. It runs directly on top of hardware memory channels with zero-copy ring buffers, enabling sub-millisecond inter-agent message passing and deterministic execution guarantees.</p>
+            </div>
+          </div>
+
+          <div class="faq-card">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I run SYNAPSE OS fully on-premise and air-gapped?</span>
+              <span class="faq-chevron">&darr;</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes. The Enterprise Quantum tier provides isolated binaries that operate without any external internet connection. All telemetry, model weights, and execution sandboxes remain strictly within your physical security perimeter.</p>
+            </div>
+          </div>
+
+          <div class="faq-card">
+            <button class="faq-question" aria-expanded="false">
+              <span>What hardware acceleration architectures are supported out of the box?</span>
+              <span class="faq-chevron">&darr;</span>
+            </button>
+            <div class="faq-answer">
+              <p>SYNAPSE natively compiles to NVIDIA CUDA (Hopper, Ada Lovelace, Ampere), AMD ROCm, Apple Metal (M-Series unified memory), and WebGPU for client-side sandboxed inference.</p>
+            </div>
+          </div>
+
+          <div class="faq-card">
+            <button class="faq-question" aria-expanded="false">
+              <span>How does the 14-day Alpha trial work?</span>
+              <span class="faq-chevron">&darr;</span>
+            </button>
+            <div class="faq-answer">
+              <p>You can launch a Pro Cluster instantly without entering credit card details. You get full access to up to 64 concurrent agents and live telemetry streaming for 14 days.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER & LEAD CAPTURE SECTION -->
+    <section class="newsletter-section" id="community">
+      <div class="container">
+        <div class="newsletter-card" data-tilt>
+          <div class="newsletter-content">
+            <div class="section-badge">STAY AHEAD OF THE CURVE</div>
+            <h2 class="newsletter-title">Join 40,000+ AI Systems Engineers</h2>
+            <p class="newsletter-desc">Receive bi-weekly deep dives into neural architecture, spatial computing benchmarks, and kernel optimization techniques.</p>
+            
+            <form class="newsletter-form" id="newsletter-form" novalidate>
+              <div class="input-wrap">
+                <input type="email" id="newsletter-email" placeholder="developer@quantum-labs.io" required aria-label="Email address for newsletter">
+                <button type="submit" class="btn btn-primary" id="newsletter-submit">Subscribe Now</button>
+              </div>
+              <p class="form-feedback" id="newsletter-feedback"></p>
+            </form>
+            <span class="privacy-note">🔒 Zero spam. Unsubscribe at any moment. Respectful data privacy.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- SEMANTIC FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand Info -->
+        <div class="footer-col brand-col">
+          <a href="#hero" class="brand-logo">
+            <div class="logo-symbol small"></div>
+            <span class="brand-name">SYNAPSE<span class="brand-dot">.OS</span></span>
+          </a>
+          <p class="footer-tagline">
+            The next-generation autonomous neural operating engine for spatial artificial intelligence.
+          </p>
+          <div class="footer-system-status">
+            <span class="status-dot pulsating"></span>
+            <span>All Global Clusters Operational (0.8ms avg)</span>
+          </div>
+        </div>
+
+        <!-- Links Col 1 -->
+        <div class="footer-col">
+          <h4 class="footer-title">Product</h4>
+          <ul class="footer-links">
+            <li><a href="#features">Capabilities</a></li>
+            <li><a href="#demo">Interactive Engine</a></li>
+            <li><a href="#architecture">Architecture Stack</a></li>
+            <li><a href="#calculator">ROI Calculator</a></li>
+            <li><a href="#pricing">Pricing & Tiers</a></li>
+          </ul>
+        </div>
+
+        <!-- Links Col 2 -->
+        <div class="footer-col">
+          <h4 class="footer-title">Developers</h4>
+          <ul class="footer-links">
+            <li><a href="#hero-terminal-pill">CLI Quickstart</a></li>
+            <li><a href="#architecture">Micro-Kernel Docs</a></li>
+            <li><a href="#demo">WebGPU Sandbox</a></li>
+            <li><a href="https://github.com" target="_blank" rel="noopener">GitHub Repository</a></li>
+            <li><a href="#faq">Security & ZK Proofs</a></li>
+          </ul>
+        </div>
+
+        <!-- Links Col 3 -->
+        <div class="footer-col">
+          <h4 class="footer-title">Company</h4>
+          <ul class="footer-links">
+            <li><a href="#testimonials">Customer Stories</a></li>
+            <li><a href="#community">Engineering Blog</a></li>
+            <li><a href="#pricing">Enterprise Solutions</a></li>
+            <li><a href="#faq">Careers <span class="badge-mini">WE'RE HIRING</span></a></li>
+            <li><a href="#hero">Press Kit</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 SYNAPSE OS Inc. Built with semantic HTML5, pure modern CSS & vanilla JS.</p>
+        <div class="footer-legal-links">
+          <a href="#hero">Privacy Policy</a>
+          <a href="#hero">Terms of Service</a>
+          <a href="#hero">System Telemetry</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- COMMAND PALETTE MODAL (CTRL+K) -->
+  <div class="cmd-palette-modal" id="cmd-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="cmd-search-input">
+    <div class="cmd-backdrop" id="cmd-backdrop"></div>
+    <div class="cmd-dialog">
+      <div class="cmd-input-bar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="cmd-search-input" placeholder="Type a command or search section (e.g., 'pricing', 'demo', 'sandbox')..." autocomplete="off">
+        <kbd class="cmd-esc">ESC</kbd>
+      </div>
+      <ul class="cmd-results" id="cmd-results" role="listbox">
+        <li class="cmd-item" role="option" data-target="#hero"><span>⚡ Hero Overview</span><small>Home</small></li>
+        <li class="cmd-item" role="option" data-target="#demo"><span>🧪 Interactive Engine Simulator</span><small>Demo</small></li>
+        <li class="cmd-item" role="option" data-target="#features"><span>🔮 Core Capabilities</span><small>Features</small></li>
+        <li class="cmd-item" role="option" data-target="#architecture"><span>🏛️ Hardware Architecture</span><small>Docs</small></li>
+        <li class="cmd-item" role="option" data-target="#calculator"><span>🧮 ROI & Efficiency Calculator</span><small>Tools</small></li>
+        <li class="cmd-item" role="option" data-target="#pricing"><span>💳 Pricing & Cluster Plans</span><small>Pricing</small></li>
+        <li class="cmd-item" role="option" data-target="#faq"><span>❓ Frequently Asked Questions</span><small>Help</small></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>

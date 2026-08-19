@@ -1,0 +1,104 @@
+/* ==========================================================================
+   AETHERIA DYNAMIC ATMOSPHERE & WEATHER EFFECTS
+   ========================================================================== */
+
+/* Weather Themes on Body */
+body[data-weather="clear-day"] .ambient-glow {
+  background: radial-gradient(circle at 75% 15%, rgba(245, 158, 11, 0.28) 0%, rgba(14, 165, 233, 0.18) 40%, transparent 75%);
+}
+
+body[data-weather="clear-night"] .ambient-glow {
+  background: radial-gradient(circle at 75% 15%, rgba(99, 102, 241, 0.3) 0%, rgba(15, 23, 42, 0.5) 60%, transparent 80%);
+}
+
+body[data-weather="rain"] .ambient-glow {
+  background: radial-gradient(circle at 50% 20%, rgba(14, 165, 233, 0.25) 0%, rgba(30, 41, 59, 0.6) 60%, transparent 85%);
+}
+
+body[data-weather="thunderstorm"] .ambient-glow {
+  background: radial-gradient(circle at 60% 10%, rgba(168, 85, 247, 0.35) 0%, rgba(30, 27, 75, 0.7) 60%, transparent 85%);
+}
+
+body[data-weather="snow"] .ambient-glow {
+  background: radial-gradient(circle at 50% 30%, rgba(224, 242, 254, 0.22) 0%, rgba(30, 41, 59, 0.55) 60%, transparent 85%);
+}
+
+body[data-weather="clouds"] .ambient-glow {
+  background: radial-gradient(circle at 50% 20%, rgba(148, 163, 184, 0.2) 0%, rgba(15, 23, 42, 0.5) 60%, transparent 80%);
+}
+
+body[data-weather="fog"] .ambient-glow {
+  background: radial-gradient(circle at 50% 50%, rgba(148, 163, 184, 0.3) 0%, rgba(15, 23, 42, 0.65) 70%, transparent 90%);
+}
+
+/* Lightning Flash Effect */
+.lightning-flash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+}
+
+@keyframes flashAnimation {
+  0% { opacity: 0; }
+  10% { opacity: 0.8; }
+  20% { opacity: 0.2; }
+  30% { opacity: 0.9; }
+  45% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.flash-active {
+  animation: flashAnimation 0.5s ease-out;
+}
+
+/* Interactive SVG Weather Icons */
+.svg-weather-icon {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.anim-sun-spin {
+  transform-origin: center;
+  animation: sunSpin 24s linear infinite;
+}
+
+@keyframes sunSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.anim-cloud-drift {
+  animation: cloudDrift 5s ease-in-out infinite alternate;
+}
+
+@keyframes cloudDrift {
+  0% { transform: translateX(-4px); }
+  100% { transform: translateX(4px); }
+}
+
+.anim-rain-drop {
+  animation: rainDrop 1.2s cubic-bezier(0.4, 0, 1, 1) infinite;
+}
+
+@keyframes rainDrop {
+  0% { transform: translateY(-8px); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: translateY(14px); opacity: 0; }
+}
+
+.anim-snow-flake {
+  animation: snowFlake 3s ease-in-out infinite;
+}
+
+@keyframes snowFlake {
+  0% { transform: translateY(-6px) rotate(0deg); opacity: 0; }
+  50% { opacity: 1; transform: translateY(4px) rotate(180deg); }
+  100% { transform: translateY(14px) rotate(360deg); opacity: 0; }
+}
