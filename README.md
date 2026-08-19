@@ -133,6 +133,6 @@ Once running, navigate to:
 
 ## 👨‍💻 Author
 
-- **Intern**: Amine Belkhir
+- **Intern**: Amine
 - **Program**: Progree Frontend Development Internship
 - **Focus Areas**: Semantic HTML5, CSS3 Glassmorphism & Responsive Systems, ES6+ JavaScript, Asynchronous REST APIs, Data Visualization (Chart.js), SPA Architecture
